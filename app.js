@@ -5,6 +5,7 @@ const port = 4000
 // const connectedPlayers = []
 // const lobbies = []
 
+// sample data:
 const connectedPlayers = [{id: 1, positionX: 0, positionY: 0, positionZ: 0},
                            {id: 2, positionX: 0, positionY: 0, positionZ: 0}
                          ]
@@ -18,6 +19,8 @@ const getIndex = (playerId, lobbyId) => {
         }
     }
 }
+
+var moved = false
 
 app.get('/printHello', function (req, res) {
    res.send({"Hello": 1})
@@ -39,10 +42,25 @@ app.get('/getConnectedPlayers', function (req, res) {
     res.send(connectedPlayers)
 })
 
-//maybe make a simple query to test multiplayer
+//sample query to see if multiplayer is doable ***
+app.get('/checkMoved', function (req, res) {
+    res.send({movedFromStartingLoc: moved})
+})
+
+app.get('/setMoved', function (req, res) {
+    try {
+        moved = true
+        res.send({status: "ok"})
+    }
+
+    catch {
+        res.send({status: "failed"})
+    }
+}) 
+// **********
 
 app.get('/getLobbies', function (req, res) {
-    
+    res.send(lobbies)
 })
 
 // Mutations:
