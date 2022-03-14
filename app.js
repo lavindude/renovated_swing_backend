@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-const port = 4000
+const port = process.env.PORT || 4000
 
 // const connectedPlayers = []
 // const lobbies = []
@@ -80,6 +80,6 @@ app.get('/syncPlayerPosition', function (req, res) {
     
 })
 
-var server = app.listen(port, function () {
+app.listen(port, function () {
    console.log("Example app listening at port: " + port)
 })
