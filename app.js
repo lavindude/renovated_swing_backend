@@ -50,13 +50,24 @@ app.get('/checkMoved', function (req, res) {
 app.get('/setMoved', function (req, res) {
     try {
         moved = true
-        res.send({status: "ok"})
+        res.send({"status": "ok"})
     }
 
     catch {
-        res.send({status: "failed"})
+        res.send({"status": "failed"})
     }
-}) 
+})
+
+app.get('/setNotMoved', function (req, res) {
+    try {
+        moved = false
+        res.send({"status": "ok"})
+    }
+
+    catch {
+        res.send({"status": "failed"})
+    }
+})
 // **********
 
 app.get('/getLobbies', function (req, res) {
