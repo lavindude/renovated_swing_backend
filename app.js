@@ -27,7 +27,7 @@ app.get('/printHello', function (req, res) {
 })
 
 // Queries:
-app.get(`/getLobbyPlayers`, function (req, res) {
+app.get(`/getLobbyPlayers`, function (req, res) { // getLobbyPlayers?lobbyId=1
     try {
         const lobbyId = req.query.lobbyId
         res.send(lobbies[lobbyId-1].lobbyPlayers)
@@ -64,12 +64,32 @@ app.get('/getLobbies', function (req, res) {
 })
 
 // Mutations:
-app.get('/createGameCode', function (req, res) {
-    
+app.get('/createGameCode', function (req, res) { // createGameCode?userId=1
+    const userId = req.query.userId
+    const curUser = connectedPlayers[userId-1]
+    if (lobbies.length === 0) {
+        lobbies[0] = {id: 1, numOfPlayers: 4, lobbyPlayers: [curUser]}
+        res.send({"lobbyId" : 1})
+    }
+
+    else {
+        const newLobbyId = lobbies.length+1
+        lobbies[newLobbyId-1] = {id: newLobbyId, numOfPlayers: 4, lobbyPlayers: [curUser]}
+        res.send({"lobbyId": newLobbyId})
+    }
 })
 
 app.get('/createUserId', function (req, res) {
-    
+    if (connectedPlayers.length === 0) {
+        connectedPlayers[0] = {id: 1, positionX: 0, positionY: 0, positionZ: 0}
+        res.send({"newPlayerId": 1})
+    }
+
+    else {
+        const newPlayerId = connectedPlayers.length+1
+        connectedPlayers.push({id: newPlayerId, positionX: 0, positionY: 0, positionZ: 0})
+        res.send({"newPlayerId": newPlayerId})
+    }
 })
 
 app.get('/joinGame', function (req, res) {
