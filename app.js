@@ -27,7 +27,7 @@ app.get('/printHello', function (req, res) {
 })
 
 // Queries:
-app.get(`/getLobbyPlayers`, function (req, res) { // getLobbyPlayers?lobbyId=1
+app.get('/getLobbyPlayers', function (req, res) { // getLobbyPlayers?lobbyId=1
     try {
         const lobbyId = req.query.lobbyId
         res.send(lobbies[lobbyId-1].lobbyPlayers)
@@ -90,7 +90,7 @@ app.get('/createGameCode', function (req, res) { // createGameCode?userId=1
     }
 })
 
-app.get('/createUserId', function (req, res) {
+app.get('/createUserId', function (req, res) { // createUserId
     if (connectedPlayers.length === 0) {
         connectedPlayers[0] = {id: 1, positionX: 0, positionY: 0, positionZ: 0}
         res.send({"newPlayerId": 1})
@@ -103,12 +103,35 @@ app.get('/createUserId', function (req, res) {
     }
 })
 
-app.get('/joinGame', function (req, res) {
-    
+app.get('/joinGame', function (req, res) { // joinGame?gameId=1&userId=1
+    const gameCode = req.query.gameId
+    const userId = req.query.userId
+
+    const lobbyIdList = lobbies.map(item => item.id)
+    if (!lobbyIdList.includes(parseInt(gameCode))) {
+        res.send({"status": "failed"})
+    }
+    //be careful of case when a player joinGame's twice
+    else {
+        lobbies[gameCode-1].lobbyPlayers.push(connectedPlayers[userId-1])
+        res.send({"status": "ok"})
+    }
 })
 
 app.get('/syncPlayerPosition', function (req, res) {
-    
+    const playerId = req.query.id
+    const lobbyId = req.query.lobbyId
+    const x = req.query.x
+    const y = req.query.y
+    const z = req.query.z
+
+    const curPlayerLobbyIndex = getIndex(playerId, lobbyId)
+
+    lobbies[lobbyId-1].lobbyPlayers[curPlayerLobbyIndex].positionX = x
+    lobbies[lobbyId-1].lobbyPlayers[curPlayerLobbyIndex].positionY = y
+    lobbies[lobbyId-1].lobbyPlayers[curPlayerLobbyIndex].positionZ = z
+
+    res.send({"status":"ok"})
 })
 
 app.listen(port, function () {
