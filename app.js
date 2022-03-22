@@ -128,9 +128,9 @@ app.get('/syncPlayerPosition', function (req, res) { // syncPlayerPosition?playe
 
     else {
         const playerId = parseInt(req.query.playerId)
-        const x = parseInt(req.query.x)
-        const y = parseInt(req.query.y)
-        const z = parseInt(req.query.z)
+        const x = parseFloat(req.query.x)
+        const y = parseFloat(req.query.y)
+        const z = parseFloat(req.query.z)
 
         const curPlayerLobbyIndex = getIndex(playerId, lobbyId)
 
