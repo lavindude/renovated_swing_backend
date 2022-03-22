@@ -2,14 +2,14 @@ var express = require('express');
 var app = express();
 const port = process.env.PORT || 4000
 
-// const connectedPlayers = []
-// const lobbies = []
+const connectedPlayers = []
+const lobbies = []
 
 // sample data:
-const connectedPlayers = [{id: 1, positionX: 0, positionY: 0, positionZ: 0},
-                           {id: 2, positionX: 0, positionY: 0, positionZ: 0}
-                         ]
-const lobbies = [{id: 1, numOfPlayers: 4, lobbyPlayers: [connectedPlayers[0], connectedPlayers[1]]}]
+// const connectedPlayers = [{id: 1, positionX: 0, positionY: 0, positionZ: 0},
+//                            {id: 2, positionX: 0, positionY: 0, positionZ: 0}
+//                          ]
+// const lobbies = [{id: 1, numOfPlayers: 4, lobbyPlayers: [connectedPlayers[0], connectedPlayers[1]]}]
 
 const getIndex = (playerId, lobbyId) => {
     const curLobbyArray = lobbies[lobbyId-1].lobbyPlayers
@@ -141,6 +141,8 @@ app.get('/syncPlayerPosition', function (req, res) { // syncPlayerPosition?playe
         res.send({"status":"ok"})
     }
 })
+
+// need a remove user query, remove from lobby (CRUD)
 
 app.listen(port, function () {
    console.log("Example app listening at port: " + port)
