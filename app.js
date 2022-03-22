@@ -109,7 +109,7 @@ app.get('/joinGame', function (req, res) { // joinGame?gameId=1&userId=1
 
     const lobbyIdList = lobbies.map(item => item.id)
     if (!lobbyIdList.includes(parseInt(gameCode))) {
-        res.send({"status": "failed"})
+        res.send({"status": "lobby DNE"})
     }
     //be careful of case when a player joinGame's twice
     else {
@@ -118,20 +118,28 @@ app.get('/joinGame', function (req, res) { // joinGame?gameId=1&userId=1
     }
 })
 
-app.get('/syncPlayerPosition', function (req, res) {
-    const playerId = req.query.id
-    const lobbyId = req.query.lobbyId
-    const x = req.query.x
-    const y = req.query.y
-    const z = req.query.z
+app.get('/syncPlayerPosition', function (req, res) { // syncPlayerPosition?playerId=1&lobbyId=1&x=1&y=1&z=1
+    const lobbyId = parseInt(req.query.lobbyId)
+    //error check if lobby DNE
+    const lobbyIdList = lobbies.map(item => item.id)
+    if (!lobbyIdList.includes(parseInt(lobbyId))) {
+        res.send({"status": "lobby DNE"})
+    }
 
-    const curPlayerLobbyIndex = getIndex(playerId, lobbyId)
+    else {
+        const playerId = parseInt(req.query.playerId)
+        const x = parseInt(req.query.x)
+        const y = parseInt(req.query.y)
+        const z = parseInt(req.query.z)
 
-    lobbies[lobbyId-1].lobbyPlayers[curPlayerLobbyIndex].positionX = x
-    lobbies[lobbyId-1].lobbyPlayers[curPlayerLobbyIndex].positionY = y
-    lobbies[lobbyId-1].lobbyPlayers[curPlayerLobbyIndex].positionZ = z
+        const curPlayerLobbyIndex = getIndex(playerId, lobbyId)
 
-    res.send({"status":"ok"})
+        lobbies[lobbyId-1].lobbyPlayers[curPlayerLobbyIndex].positionX = x
+        lobbies[lobbyId-1].lobbyPlayers[curPlayerLobbyIndex].positionY = y
+        lobbies[lobbyId-1].lobbyPlayers[curPlayerLobbyIndex].positionZ = z
+
+        res.send({"status":"ok"})
+    }
 })
 
 app.listen(port, function () {
