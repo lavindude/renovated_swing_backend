@@ -76,6 +76,11 @@ app.get('/getLobbies', function (req, res) {
     res.send(lobbies)
 })
 
+app.get('/getPosition', function (req, res) { // getPosition?userId=1
+    const userId = req.query.userId
+    res.send(connectedPlayers[userId-1])
+})
+
 // Mutations:
 app.get('/createGameCode', function (req, res) { // createGameCode?userId=1
     const userId = req.query.userId
