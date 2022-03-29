@@ -7,9 +7,11 @@ const port = process.env.PORT || 4000
 
 // sample data:
 const connectedPlayers = [{id: 1, positionX: 0, positionY: 0, positionZ: 0},
-                           {id: 2, positionX: 0, positionY: 0, positionZ: 0}
+                           {id: 2, positionX: 0, positionY: 0, positionZ: 0},
+                           {id: 3, positionX: 0, positionY: 0, positionZ: 0}
                          ]
-const lobbies = [{id: 1, numOfPlayers: 4, lobbyPlayers: [connectedPlayers[0], connectedPlayers[1]]}]
+const lobbies = [{id: 1, numOfPlayers: 4, lobbyPlayers: [connectedPlayers[0], connectedPlayers[1],
+                                                        connectedPlayers[2]]}]
 
 const getIndex = (playerId, lobbyId) => {
     const curLobbyArray = lobbies[lobbyId-1].lobbyPlayers
