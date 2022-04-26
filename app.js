@@ -7,9 +7,9 @@ const port = process.env.PORT || 4000
 
 // sample data:
 const connectedPlayers = [{id: 1, positionX: 2, positionY: 48, positionZ: 0},
-                           {id: 2, positionX: 2, positionY: 48, positionZ: 0},
-                           {id: 3, positionX: 2, positionY: 48, positionZ: 0},
-                           {id: 4, positionX: 2, positionY: 48, positionZ: 0}
+                           {id: 2, positionX: 4, positionY: 48, positionZ: 0},
+                           {id: 3, positionX: 6, positionY: 48, positionZ: 0},
+                           {id: 4, positionX: 8, positionY: 48, positionZ: 0}
                          ]
 const lobbies = [{id: 1, numOfPlayers: 4, lobbyPlayers: [connectedPlayers[0], connectedPlayers[1],
                                                         connectedPlayers[2], connectedPlayers[3]]}]
